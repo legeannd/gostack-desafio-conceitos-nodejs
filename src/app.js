@@ -10,11 +10,16 @@ app.use(cors());
 
 const repositories = [];
 
+
+//Rota get, que retorna todos os repositórios
+
 app.get("/repositories", (request, response) => {
   
   return response.json(repositories);
 
 });
+
+//Rota post, que adiciona um novo repositório usando as informações passadas no body
 
 app.post("/repositories", (request, response) => {
   const { title, url, techs } = request.body;
@@ -31,6 +36,11 @@ app.post("/repositories", (request, response) => {
 
   return response.json(repository)
 });
+
+//Rota put, que altera certos dados de um repositório com base no ID passado como parâmetro na rota
+/* Para manter o conceito de imutabilidade, um novo objeto de repositório é criado, e nele são passados 
+os valores do repositório antigo que não foram alterados, através de um spread operator, e os valores novos.*/
+//O novo objeto é adicionado no índice do objeto anterior, fazendo assim a substituição 
 
 app.put("/repositories/:id", (request, response) => {
   const { id } = request.params;
@@ -57,6 +67,8 @@ app.put("/repositories/:id", (request, response) => {
 
 });
 
+//Rota delete, que remove da lista o repositório que tenha o ID igual ao passado como parâmetro de rota, caso exista
+
 app.delete("/repositories/:id", (request, response) => {
   const { id } = request.params;
 
@@ -70,6 +82,8 @@ app.delete("/repositories/:id", (request, response) => {
 
   return response.status(204).send();
 });
+
+//Rota post, que adiciona um like ao repositório que tenha o ID igual ao passado como parâmetro de rota, caso exista
 
 app.post("/repositories/:id/like", (request, response) => {
   const { id } = request.params;
